@@ -1,5 +1,4 @@
 import { expect } from "chai";
-import { Signer } from "@ethersproject/abstract-signer";
 import { ethers } from "hardhat";
 import { getAddressBookByNetwork } from "../src/config";
 import { IGUniPool, GUniOracle } from "../typechain";
@@ -18,6 +17,7 @@ describe("Test GUniOracle", function () {
     let oracleUsdcWeth: GUniOracle;
     let oracleDaiUsdt: GUniOracle;
     let chainlinkEthUsd: GUniOracle;
+
     before(async function () {
         guniDaiUsdc = await ethers.getContractAt(
             "IGUniPool",

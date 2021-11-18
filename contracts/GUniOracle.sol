@@ -56,10 +56,10 @@
 
 pragma solidity =0.6.12;
 
-import {IOracle} from "./vendor/IOracle.sol";
+import {IExtendedAggregator} from "./vendor/IExtendedAggregator.sol";
 import {IGUniPool} from "./vendor/IGUniPool.sol";
 
-contract GUniOracle is IOracle {
+contract GUniOracle is IExtendedAggregator {
     // solhint-disable private-vars-leading-underscore, var-name-mixedcase
     uint256 private immutable UNIT_0;
     uint256 private immutable UNIT_1;
@@ -73,18 +73,18 @@ contract GUniOracle is IOracle {
     address public immutable priceFeed1;
 
     constructor(address _pool, address _feed0, address _feed1) public {
-        uint256 dec0 = uint256(IOracle(IGUniPool(_pool).token0()).decimals());
+        uint256 dec0 = uint256(IExtendedAggregator(IGUniPool(_pool).token0()).decimals());
         require(dec0 <= 18, "token0-dec-gt-18");
         UNIT_0 = 10 ** dec0;
         TO_WAD_0 = 10 ** (18 - dec0);
-        uint256 dec1 = uint256(IOracle(IGUniPool(_pool).token1()).decimals());
+        uint256 dec1 = uint256(IExtendedAggregator(IGUniPool(_pool).token1()).decimals());
         require(dec1 <= 18, "token1-dec-gt-18");
         UNIT_1 = 10 ** dec1;
         TO_WAD_1 = 10 ** (18 - dec1);
-        uint256 decOracle0 = uint256(IOracle(_feed0).decimals());
+        uint256 decOracle0 = uint256(IExtendedAggregator(_feed0).decimals());
         require(decOracle0 <= 18, "oracle0-dec-gt-18");
         TO_WAD_ORACLE_0 = 10 ** (18 - decOracle0);
-        uint256 decOracle1 = uint256(IOracle(_feed1).decimals());
+        uint256 decOracle1 = uint256(IExtendedAggregator(_feed1).decimals());
         require(decOracle1 <= 18, "oracle1-dec-gt-18");
         TO_WAD_ORACLE_1 = 10 ** (18 - decOracle1);
         pool = _pool;
@@ -115,7 +115,26 @@ contract GUniOracle is IOracle {
         return int256(preq);
     }
 
-    function decimals() external view override returns (uint8) {
+    function getToken() external view override returns (address) {
+        return pool;
+    }
+
+    function getSubTokens() external view override returns (address[] memory) {
+        address[] memory arr = new address[](2);
+        arr[0] = IGUniPool(pool).token0();
+        arr[1] = IGUniPool(pool).token1();
+        return arr;
+    }
+
+    function getPlatformId() external pure override returns (IExtendedAggregator.PlatformId) {
+        return IExtendedAggregator.PlatformId.GUni;
+    }
+
+    function getTokenType() external pure override returns (IExtendedAggregator.TokenType) {
+        return IExtendedAggregator.TokenType.Complex;
+    }
+
+    function decimals() external pure override returns (uint8) {
         return 18;
     }
 
@@ -124,7 +143,7 @@ contract GUniOracle is IOracle {
         view
         returns (uint256)
     {
-        int256 price = IOracle(isToken0 ? priceFeed0 : priceFeed1).latestAnswer();
+        int256 price = IExtendedAggregator(isToken0 ? priceFeed0 : priceFeed1).latestAnswer();
         require(price > 0, "negative-price");
         return _mul(uint256(price), isToken0 ? TO_WAD_ORACLE_0 : TO_WAD_ORACLE_1);
     }
