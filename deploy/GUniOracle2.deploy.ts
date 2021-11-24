@@ -10,7 +10,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     hre.network.name === "mainnet" || hre.network.name === "goerli"
   ) {
     console.log(
-      `Deploying G UNI Oracle DAI/USDC to ${hre.network.name}. Hit ctrl + c to abort`
+      `Deploying G UNI Oracle USDC/USDT to ${hre.network.name}. Hit ctrl + c to abort`
     );
     await sleep(10000);
   }
@@ -18,11 +18,11 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  const { GUniDaiUsdc1bps, ChainlinkDaiUsd, ChainlinkUsdcUsd } = getAddressBookByNetwork(hre.network.name);
+  const { GUniUsdcUsdt1bps, ChainlinkUsdtUsd, ChainlinkUsdcUsd } = getAddressBookByNetwork(hre.network.name);
 
   await deploy("GUniOracle", {
     from: deployer,
-    args: [GUniDaiUsdc1bps, ChainlinkDaiUsd, ChainlinkUsdcUsd],
+    args: [GUniUsdcUsdt1bps, ChainlinkUsdcUsd, ChainlinkUsdtUsd],
   });
 };
 
@@ -30,10 +30,10 @@ export default func;
 
 func.skip = async (hre: HardhatRuntimeEnvironment) => {
   const shouldSkip =
-    hre.network.name === "mainnet" ||
+    //hre.network.name === "mainnet" ||
     hre.network.name === "goerli";
 
   return shouldSkip ? true : false;
 };
 
-func.tags = ["GUniOracle1"];
+func.tags = ["GUniOracle2"];

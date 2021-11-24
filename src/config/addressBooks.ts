@@ -5,7 +5,9 @@ export const getAddressBookByNetwork = (network: string) => {
       return {
         Gelato: "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6",
         GUniDaiUsdc: "0xAbDDAfB225e10B90D798bB8A886238Fb835e2053",
+        GUniDaiUsdc1bps: "0x50379f632ca68D36E50cfBC8F78fe16bd1499d1e",
         GUniUsdcUsdt: "0x02F88164060912EE44BA9480D05d462D20cfF3bC",
+        GUniUsdcUsdt1bps: "0xD2eeC91055F07fE24C9cCB25828ecfEFd4be0c41",
         GUniDaiUsdt: "0xD58c89181360Dd9166881fce2Bc7C9Baae2D5f31",
         GUniUsdcWeth: "0xa6c49FD13E50a30C65E6C8480aADA132011D0613",
         ChainlinkDaiUsd: "0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9",
@@ -20,7 +22,9 @@ export const getAddressBookByNetwork = (network: string) => {
       return {
         Gelato: "",
         GUniDaiUsdc: "",
+        GUniDaiUsdc1bps: "",
         GUniUsdcUsdt: "",
+        GUniUsdcUsdt1bps: "",
         GUniDaiUsdt: "",
         GUniUsdcWeth: "",
         ChainlinkDaiUsd: "",
@@ -34,7 +38,9 @@ export const getAddressBookByNetwork = (network: string) => {
       return {
         Gelato: "0x3CACa7b48D0573D793d3b0279b5F0029180E83b6",
         GUniDaiUsdc: "0xAbDDAfB225e10B90D798bB8A886238Fb835e2053",
+        GUniDaiUsdc1bs: "0x50379f632ca68D36E50cfBC8F78fe16bd1499d1e",
         GUniUsdcUsdt: "0x02F88164060912EE44BA9480D05d462D20cfF3bC",
+        GUniUsdcUsdt1bps: "0xD2eeC91055F07fE24C9cCB25828ecfEFd4be0c41",
         GUniDaiUsdt: "0xD58c89181360Dd9166881fce2Bc7C9Baae2D5f31",
         GUniUsdcWeth: "0xa6c49FD13E50a30C65E6C8480aADA132011D0613",
         ChainlinkDaiUsd: "0xAed0c38402a5d19df6E4c03F4E2DceD6e29c1ee9",
