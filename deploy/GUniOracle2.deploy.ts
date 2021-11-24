@@ -18,11 +18,11 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  const { GUniUsdcUsdt1bps, ChainlinkUsdtUsd, ChainlinkUsdcUsd } = getAddressBookByNetwork(hre.network.name);
+  const { GUniUsdcUsdt1bps, ChainlinkUsdcEth, ChainlinkUsdtEth } = getAddressBookByNetwork(hre.network.name);
 
   await deploy("GUniOracle", {
     from: deployer,
-    args: [GUniUsdcUsdt1bps, ChainlinkUsdcUsd, ChainlinkUsdtUsd],
+    args: [GUniUsdcUsdt1bps, ChainlinkUsdcEth, ChainlinkUsdtEth],
   });
 };
 
@@ -30,7 +30,7 @@ export default func;
 
 func.skip = async (hre: HardhatRuntimeEnvironment) => {
   const shouldSkip =
-    //hre.network.name === "mainnet" ||
+    hre.network.name === "mainnet" ||
     hre.network.name === "goerli";
 
   return shouldSkip ? true : false;

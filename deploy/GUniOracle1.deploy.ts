@@ -18,11 +18,11 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  const { GUniDaiUsdc1bps, ChainlinkDaiUsd, ChainlinkUsdcUsd } = getAddressBookByNetwork(hre.network.name);
+  const { GUniDaiUsdc1bps, ChainlinkDaiEth, ChainlinkUsdcEth } = getAddressBookByNetwork(hre.network.name);
 
   await deploy("GUniOracle", {
     from: deployer,
-    args: [GUniDaiUsdc1bps, ChainlinkDaiUsd, ChainlinkUsdcUsd],
+    args: [GUniDaiUsdc1bps, ChainlinkDaiEth, ChainlinkUsdcEth],
   });
 };
 
